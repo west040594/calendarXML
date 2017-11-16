@@ -61,7 +61,7 @@ function sendAjaxForm(result_form, ajax_form, url) {
                 return table;
             }
 
-            $("#"+result_form).append(getTable());
+            $("#"+result_form).hmtl(getTable());
         },
         error: function(response) { // Данные не отправлены
             $("#"+result_form).html('Ошибка. Данные не отправлены.');
