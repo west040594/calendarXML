@@ -28,18 +28,6 @@
         </form>
 
         <div id="result_form"> </div>
-
-        <?php
-        require_once('./Holidays.php');
-        require_once('./Connection.php');
-        require_once('./Calendar.php');
-
-        $connection = new Connection('localhost', 'root', '', 'calendar');
-        $holidays_table = new Holidays($connection);
-
-
-        ?>
-
     </div>
 
 
