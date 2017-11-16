@@ -19,8 +19,8 @@ class Connection
         try {
             $this->pdo = new PDO(
                 "mysql:host={$this->servername};dbname={$this->dbname}",
-                "{$this->username}",
-                "{$this->password}"
+                $this->username,
+                $this->password
             );
         } catch (PDOException $e) {
             throw new Exception('Ошибка соединения');
