@@ -41,18 +41,19 @@ function sendAjaxForm(result_form, ajax_form, url) {
                     tbody += "<td>" + (result.table[i].holidayTitle === null ? "" : result.table[i].holidayTitle)  + "</td>";
                     tbody += "</tr>";
                 }
-                table = "<table class='table'>" +
-                    "<thead class='thead-dark'>" +
-                    "<tr>" +
-                    "<th scope='col'>#</th>" +
-                    "<th scope='col'>День</th>" +
-                    "<th scope='col'>Тип</th>" +
-                    "<th scope='col'>Праздник</th>" +
-                    "</tr>" +
-                    "</thead>" +
-                    "<tbody>" +
-                    tbody+
-                    "</tbody>" +
+                table =
+                    "<table class='table'>" +
+                        "<thead class='thead-dark'>" +
+                            "<tr>" +
+                            "<th scope='col'>#</th>" +
+                            "<th scope='col'>День</th>" +
+                            "<th scope='col'>Тип</th>" +
+                            "<th scope='col'>Праздник</th>" +
+                            "</tr>" +
+                        "</thead>" +
+                        "<tbody>" +
+                            tbody+
+                        "</tbody>" +
                     "</table>";
 
                 return table;

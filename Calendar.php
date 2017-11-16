@@ -38,7 +38,7 @@ class Calendar
         $searchId = $id;
         $result = array_filter($this->holidays, function($innerArray){
             global $searchId;
-            return in_array($searchId, $innerArray);    //Поиск по всему массиву
+            return in_array($searchId, $innerArray);
         });
 
         return current($result)['title'];
@@ -74,9 +74,9 @@ class Calendar
                 $this->days[$i]['day'] = null;
 
             if(isset($day->attributes()->t))
-                $this->days[$i]['type'] = (int)$day->attributes()->t;
+                $this->days[$i]['type_id'] = (int)$day->attributes()->t;
             else
-                $this->days[$i]['type'] = null;
+                $this->days[$i]['type_id'] = null;
 
             if(isset($day->attributes()->h))
                 $this->days[$i]['holiday_id'] = (int)$day->attributes()->h;
