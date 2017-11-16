@@ -1,4 +1,4 @@
-$(document ).ready(function() {
+$(document).ready(function() {
     $("#btn").click(
         function(){
             sendAjaxForm('result_form', 'ajax_form', 'action_ajax_form.php');
@@ -7,8 +7,9 @@ $(document ).ready(function() {
     );
 });
 
-$( document ).ajaxStop(function() {
+$(document).ajaxStop(function() {
     paintHoliday();
+    return false;
 });
 
 //Отрисовка выходных день красным
@@ -23,6 +24,37 @@ function paintHoliday() {
     });
 }
 
+//Получить html таблицу
+function getTable(tableObject) {
+    var tableBody = '';
+    var htmlTable = '';
+    for(var i = 0; i < tableObject.length; i++)
+    {
+        tableBody += "<tr>";
+        tableBody +=  "<th>" + tableObject[i].row + "</th>";
+        tableBody += "<td>" + tableObject[i].day + "</td>";
+        tableBody += "<td>" + tableObject[i].typeTitle + "</td>";
+        tableBody += "<td>" + (tableObject[i].holidayTitle === null ? "" : tableObject[i].holidayTitle)  + "</td>";
+        tableBody += "</tr>";
+    }
+    htmlTable =
+        "<table class='table'>" +
+        "<thead class='thead-dark'>" +
+        "<tr>" +
+        "<th scope='col'>#</th>" +
+        "<th scope='col'>День</th>" +
+        "<th scope='col'>Тип</th>" +
+        "<th scope='col'>Праздник</th>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody>" +
+            tableBody +
+        "</tbody>" +
+        "</table>";
+
+    return htmlTable;
+}
+
 function sendAjaxForm(result_form, ajax_form, url) {
     $.ajax({
         url:        url,
@@ -31,37 +63,9 @@ function sendAjaxForm(result_form, ajax_form, url) {
         data: $("#"+ajax_form).serialize(),
         success: function(response) {
             var result = $.parseJSON(response);
-            function getTable() {
-                var tbody = '';
-                var table = '';
-                for(var i = 0; i < result.table.length; i++)
-                {
-                    tbody += "<tr>";
-                    tbody +=  "<th>" + result.table[i].row + "</th>";
-                    tbody += "<td>" + result.table[i].day + "</td>";
-                    tbody += "<td>" + result.table[i].typeTitle + "</td>";
-                    tbody += "<td>" + (result.table[i].holidayTitle === null ? "" : result.table[i].holidayTitle)  + "</td>";
-                    tbody += "</tr>";
-                }
-                table =
-                    "<table class='table'>" +
-                        "<thead class='thead-dark'>" +
-                            "<tr>" +
-                            "<th scope='col'>#</th>" +
-                            "<th scope='col'>День</th>" +
-                            "<th scope='col'>Тип</th>" +
-                            "<th scope='col'>Праздник</th>" +
-                            "</tr>" +
-                        "</thead>" +
-                        "<tbody>" +
-                            tbody+
-                        "</tbody>" +
-                    "</table>";
+            var htmlTable = getTable(result.table);
 
-                return table;
-            }
-
-            $("#"+result_form).html(getTable());
+            $("#"+result_form).html(htmlTable);
         },
         error: function(response) { // Данные не отправлены
             $("#"+result_form).html('Ошибка. Данные не отправлены.');
