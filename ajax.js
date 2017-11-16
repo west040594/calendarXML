@@ -23,7 +23,6 @@ function paintHoliday() {
     });
 }
 
-
 function sendAjaxForm(result_form, ajax_form, url) {
     $.ajax({
         url:        url,
@@ -33,8 +32,8 @@ function sendAjaxForm(result_form, ajax_form, url) {
         success: function(response) {
             var result = $.parseJSON(response);
             function getTable() {
-                var tbody;
-                var table;
+                var tbody = '';
+                var table = '';
                 for(var i = 0; i < result.table.length; i++)
                 {
                     tbody += "<tr>";
@@ -62,7 +61,7 @@ function sendAjaxForm(result_form, ajax_form, url) {
                 return table;
             }
 
-            $("#"+result_form).html(getTable());
+            $("#"+result_form).append(getTable());
         },
         error: function(response) { // Данные не отправлены
             $("#"+result_form).html('Ошибка. Данные не отправлены.');
