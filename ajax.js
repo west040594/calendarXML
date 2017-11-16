@@ -1,5 +1,18 @@
 $(document ).ready(function() {
+    $("#btn").click(
+        function(){
+            sendAjaxForm('result_form', 'ajax_form', 'action_ajax_form.php');
+            return false;
+        }
+    );
+});
 
+$( document ).ajaxStop(function() {
+    paintHoliday();
+});
+
+//Отрисовка выходных день красным
+function paintHoliday() {
     $('tr').each(function(){
         $(this).find('td').each(function(){
             if ($(this).html() === 'выходной день') {
@@ -8,15 +21,8 @@ $(document ).ready(function() {
             }
         });
     });
+}
 
-    $("#btn").click(
-        function(){
-            sendAjaxForm('result_form', 'ajax_form', 'action_ajax_form.php');
-            return false;
-        }
-    );
-
-});
 
 function sendAjaxForm(result_form, ajax_form, url) {
     $.ajax({
@@ -31,10 +37,7 @@ function sendAjaxForm(result_form, ajax_form, url) {
                 var table;
                 for(var i = 0; i < result.table.length; i++)
                 {
-                    if(result.table[i].typeTitle === 'выходной день')
-                        tbody += "<tr class='danger'>";
-                    else
-                        tbody += "<tr>";
+                    tbody += "<tr>";
                     tbody +=  "<th>" + result.table[i].row + "</th>";
                     tbody += "<td>" + result.table[i].day + "</td>";
                     tbody += "<td>" + result.table[i].typeTitle + "</td>";
@@ -59,10 +62,10 @@ function sendAjaxForm(result_form, ajax_form, url) {
                 return table;
             }
 
-            $('#result_form').html(getTable());
+            $("#"+result_form).html(getTable());
         },
         error: function(response) { // Данные не отправлены
-            $('#result_form').html('Ошибка. Данные не отправлены.');
+            $("#"+result_form).html('Ошибка. Данные не отправлены.');
         }
     });
 }

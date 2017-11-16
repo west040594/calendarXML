@@ -23,7 +23,7 @@ class Connection
                 "{$this->password}"
             );
         } catch (PDOException $e) {
-            throw new Exception('Ошибка подключения');
+            throw new Exception('Ошибка соединения');
         }
     }
 }
